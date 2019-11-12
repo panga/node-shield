@@ -1,0 +1,33 @@
+{
+  "name": "node-shield",
+  "version": "0.1.0",
+  "description": "Protects against common Node.js vulnerabilities",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "engines": {
+    "node": ">=0.10.0"
+  },
+  "author": "Leonardo Zanivan <panga@apache.org>",
+  "license": "Apache-2.0",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/panga/node-shield.git"
+  },
+  "keywords": [
+    "shield",
+    "injection",
+    "nosql",
+    "security",
+    "mongodb",
+    "express",
+    "middleware",
+    "prototype",
+    "pollution"
+  ],
+  "bugs": {
+    "url": "https://github.com/panga/node-shield/issues"
+  },
+  "homepage": "https://github.com/panga/node-shield"
+}
