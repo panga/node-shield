@@ -1,0 +1,13 @@
+{
+  "extends": "airbnb-typescript/base",
+  "env": {
+    "es6": true,
+    "node": true,
+    "jest": true
+  },
+  "rules": {
+    "import/no-extraneous-dependencies": ["error", {"devDependencies": true}],
+    "import/export": 1,
+    "import/prefer-default-export": 1
+  }
+}

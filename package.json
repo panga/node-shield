@@ -1,13 +1,25 @@
 {
   "name": "node-shield",
   "version": "0.1.0",
-  "description": "Protects against common Node.js vulnerabilities",
-  "main": "index.js",
+  "description": "Protects against common Node.js vulnerabilities in MEAN stack (MongoDB, Node.js)",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "directories": {
+    "lib": "dist"
+  },
+  "files": [
+    "dist"
+  ],
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "check": "npm-run-all --parallel test lint:fix",
+    "test": "jest --coverage",
+    "test:watch": "jest --watchAll",
+    "lint": "eslint \"src/**/*.ts\" \"test/**/*.ts\"",
+    "lint:fix": "npm run lint -- --fix",
+    "build": "npm run check && rm -rf ./dist && tsc"
   },
   "engines": {
-    "node": ">=0.10.0"
+    "node": ">=6"
   },
   "author": "Leonardo Zanivan <panga@apache.org>",
   "license": "Apache-2.0",
@@ -22,6 +34,7 @@
     "security",
     "mongodb",
     "express",
+    "mean",
     "middleware",
     "prototype",
     "pollution"
@@ -29,5 +42,21 @@
   "bugs": {
     "url": "https://github.com/panga/node-shield/issues"
   },
-  "homepage": "https://github.com/panga/node-shield"
+  "homepage": "https://github.com/panga/node-shield#readme",
+  "devDependencies": {
+    "@types/express": "^4.17.2",
+    "@types/jest": "^24.0.23",
+    "@types/node": "^12.12.7",
+    "@types/supertest": "^2.0.8",
+    "@typescript-eslint/eslint-plugin": "^2.7.0",
+    "eslint": "^6.6.0",
+    "eslint-config-airbnb-typescript": "^6.1.0",
+    "eslint-plugin-import": "^2.18.2",
+    "express": "^4.17.1",
+    "jest": "^24.9.0",
+    "npm-run-all": "^4.1.5",
+    "supertest": "^4.0.2",
+    "ts-jest": "^24.1.0",
+    "typescript": "^3.7.2"
+  }
 }
