@@ -5,33 +5,42 @@ const Utils_1 = require("./Utils");
 class Shield {
     static traverse(obj, opts) {
         let error;
-        Object.keys(obj).some((k) => {
+        for (const k in obj) {
             if (opts.mongo && Utils_1.default.isString(k) && k.indexOf('$') === 0) {
                 error = new ShieldError_1.default('Mongo $ injection found', 'mongo_error', obj);
-                return true;
+                break;
             }
             if (Utils_1.default.isPlainObject(obj[k])) {
                 if (opts.proto && (k === '__proto__' || k === 'constructor')) {
                     error = new ShieldError_1.default('Prototype pollution found', 'proto_error', obj);
-                    return true;
+                    break;
                 }
                 error = this.traverse(obj[k], opts);
                 if (error) {
-                    return true;
+                    break;
                 }
             }
-            return false;
-        });
+        }
         return error;
     }
     static evaluate(obj, opts, callback) {
-        callback(this.traverse(obj, opts));
+        if (Utils_1.default.isPlainObject(obj)) {
+            callback(this.traverse(obj, opts));
+        }
+        else {
+            callback();
+        }
     }
     static evaluateAsync(obj, opts) {
         return new Promise((resolve, reject) => {
-            const error = this.traverse(obj, opts);
-            if (error) {
-                reject(error);
+            if (Utils_1.default.isPlainObject(obj)) {
+                const error = this.traverse(obj, opts);
+                if (error) {
+                    reject(error);
+                }
+                else {
+                    resolve();
+                }
             }
             else {
                 resolve();

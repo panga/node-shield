@@ -19,13 +19,7 @@ function ExpressShield(options) {
                     opts.errorHandler(bodyErr, req, res, next);
                     return;
                 }
-                Shield_1.Shield.evaluate(req.params, opts, (paramsErr) => {
-                    if (paramsErr) {
-                        opts.errorHandler(paramsErr, req, res, next);
-                        return;
-                    }
-                    next();
-                });
+                next();
             });
         });
     };

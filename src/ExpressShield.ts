@@ -33,13 +33,7 @@ export default function ExpressShield(options ? : ExpressShieldOptions): Request
           opts.errorHandler!(bodyErr, req, res, next);
           return;
         }
-        Shield.evaluate(req.params, opts, (paramsErr) => {
-          if (paramsErr) {
-            opts.errorHandler!(paramsErr, req, res, next);
-            return;
-          }
-          next();
-        });
+        next();
       });
     });
   };

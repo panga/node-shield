@@ -9,35 +9,42 @@ export interface ShieldOptions {
 export class Shield {
   private static traverse(obj: any, opts: ShieldOptions): ShieldError | undefined {
     let error;
-    Object.keys(obj).some((k) => {
+    for (const k in obj) {
       if (opts.mongo && Utils.isString(k) && k.indexOf('$') === 0) {
         error = new ShieldError('Mongo $ injection found', 'mongo_error', obj);
-        return true;
+        break;
       }
       if (Utils.isPlainObject(obj[k])) {
         if (opts.proto && (k === '__proto__' || k === 'constructor')) {
           error = new ShieldError('Prototype pollution found', 'proto_error', obj);
-          return true;
+          break;
         }
         error = this.traverse(obj[k], opts);
         if (error) {
-          return true;
+          break;
         }
       }
-      return false;
-    });
+    }
     return error;
   }
 
   static evaluate(obj: any, opts: ShieldOptions, callback: (err?: ShieldError) => void) {
-    callback(this.traverse(obj, opts));
+    if (Utils.isPlainObject(obj)) {
+      callback(this.traverse(obj, opts));
+    } else {
+      callback();
+    }
   }
 
   static evaluateAsync(obj: any, opts: ShieldOptions): Promise<void> {
     return new Promise((resolve, reject) => {
-      const error = this.traverse(obj, opts);
-      if (error) {
-        reject(error);
+      if (Utils.isPlainObject(obj)) {
+        const error = this.traverse(obj, opts);
+        if (error) {
+          reject(error);
+        } else {
+          resolve();
+        }
       } else {
         resolve();
       }
