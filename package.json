@@ -1,6 +1,6 @@
 {
   "name": "node-shield",
-  "version": "0.1.7",
+  "version": "0.1.8",
   "description": "Protects against common Node.js vulnerabilities in MEAN stack (MongoDB, Node.js)",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
