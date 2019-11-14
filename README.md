@@ -10,6 +10,10 @@ Supports Node 6+ [![Build Status](https://travis-ci.com/panga/node-shield.svg?br
 
 100% code coverage.
 
+## Install
+
+`npm install node-shield`
+
 ## Description
 
 This module aims in protecting Node.js applications againt OWASP Injection (A1) attacks.
