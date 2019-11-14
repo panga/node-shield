@@ -1,7 +1,6 @@
 "use strict";
-function __export(m) {
-    for (var p in m) if (!exports.hasOwnProperty(p)) exports[p] = m[p];
-}
 Object.defineProperty(exports, "__esModule", { value: true });
-__export(require("./Shield"));
-__export(require("./ExpressShield"));
+const Shield_1 = require("./Shield");
+exports.shield = Shield_1.Shield;
+const ExpressShield_1 = require("./ExpressShield");
+exports.expressShield = ExpressShield_1.ExpressShield;

@@ -1,6 +1,6 @@
 import * as express from 'express';
 import * as request from 'supertest';
-import { ExpressShield } from '../src/index';
+import { expressShield } from '../src/index';
 import ShieldError from '../src/ShieldError';
 
 function app(middleware: express.RequestHandler): any {
@@ -21,14 +21,14 @@ function app(middleware: express.RequestHandler): any {
 describe('ExpressShield', () => {
   describe('query', () => {
     it('should block malicious query param', (done) => {
-      request(app(ExpressShield()))
+      request(app(expressShield()))
         .get('/query?username[$ne]=1')
         .set('Accept', 'application/json')
         .expect(403, done);
     });
 
     it('should not block valid query param', (done) => {
-      request(app(ExpressShield()))
+      request(app(expressShield()))
         .get('/query?username=1')
         .set('Accept', 'application/json')
         .expect(200, {
@@ -39,7 +39,7 @@ describe('ExpressShield', () => {
 
   describe('body', () => {
     it('should block malicious body param', (done) => {
-      request(app(ExpressShield()))
+      request(app(expressShield()))
         .post('/body')
         .send({
           username: {
@@ -51,7 +51,7 @@ describe('ExpressShield', () => {
     });
 
     it('should not block valid body param', (done) => {
-      request(app(ExpressShield()))
+      request(app(expressShield()))
         .post('/body')
         .send({
           username: 1,
@@ -63,7 +63,7 @@ describe('ExpressShield', () => {
     });
 
     it('should block malicious form param', (done) => {
-      request(app(ExpressShield()))
+      request(app(expressShield()))
         .post('/body')
         .type('form')
         .send('username[$ne]=1')
@@ -72,7 +72,7 @@ describe('ExpressShield', () => {
     });
 
     it('should not block valid form param', (done) => {
-      request(app(ExpressShield()))
+      request(app(expressShield()))
         .post('/body')
         .type('form')
         .send('username=1')
@@ -85,14 +85,14 @@ describe('ExpressShield', () => {
 
   describe('default values', () => {
     it('should block malicious Mongo request', (done) => {
-      request(app(ExpressShield()))
+      request(app(expressShield()))
         .get('/query?username[$ne]=1')
         .set('Accept', 'application/json')
         .expect(403, done);
     });
 
     it('should block malicious __proto__ request', (done) => {
-      request(app(ExpressShield()))
+      request(app(expressShield()))
         .post('/body')
         .send('{ "__proto__": { "admin": true } }')
         .set('Accept', 'application/json')
@@ -101,7 +101,7 @@ describe('ExpressShield', () => {
     });
 
     it('should block malicious constructor request', (done) => {
-      request(app(ExpressShield()))
+      request(app(expressShield()))
         .post('/body')
         .send('{ "constructor": { "admin": true } }')
         .set('Accept', 'application/json')
@@ -110,7 +110,7 @@ describe('ExpressShield', () => {
     });
 
     it('should not block valid request', (done) => {
-      request(app(ExpressShield()))
+      request(app(expressShield()))
         .get('/query?username=1')
         .set('Accept', 'application/json')
         .expect(200, {
@@ -121,7 +121,7 @@ describe('ExpressShield', () => {
 
   describe('mongo only', () => {
     it('should block malicious Mongo request', (done) => {
-      request(app(ExpressShield({
+      request(app(expressShield({
         mongo: true,
         proto: false,
       })))
@@ -131,7 +131,7 @@ describe('ExpressShield', () => {
     });
 
     it('should not block malicious __proto__ request', (done) => {
-      request(app(ExpressShield({
+      request(app(expressShield({
         mongo: true,
         proto: false,
       })))
@@ -143,7 +143,7 @@ describe('ExpressShield', () => {
     });
 
     it('should not block malicious constructor request', (done) => {
-      request(app(ExpressShield({
+      request(app(expressShield({
         mongo: true,
         proto: false,
       })))
@@ -155,7 +155,7 @@ describe('ExpressShield', () => {
     });
 
     it('should not block valid request', (done) => {
-      request(app(ExpressShield({
+      request(app(expressShield({
         mongo: true,
         proto: false,
       })))
@@ -169,7 +169,7 @@ describe('ExpressShield', () => {
 
   describe('proto only', () => {
     it('should not block malicious Mongo request', (done) => {
-      request(app(ExpressShield({
+      request(app(expressShield({
         mongo: false,
         proto: true,
       })))
@@ -179,7 +179,7 @@ describe('ExpressShield', () => {
     });
 
     it('should block malicious __proto__ request', (done) => {
-      request(app(ExpressShield({
+      request(app(expressShield({
         mongo: false,
         proto: true,
       })))
@@ -191,7 +191,7 @@ describe('ExpressShield', () => {
     });
 
     it('should block malicious constructor request', (done) => {
-      request(app(ExpressShield({
+      request(app(expressShield({
         mongo: false,
         proto: true,
       })))
@@ -203,7 +203,7 @@ describe('ExpressShield', () => {
     });
 
     it('should not block valid request', (done) => {
-      request(app(ExpressShield({
+      request(app(expressShield({
         mongo: false,
         proto: true,
       })))
@@ -217,7 +217,7 @@ describe('ExpressShield', () => {
 
   describe('custom error handler', () => {
     it('should emit error and return custom response', (done) => {
-      request(app(ExpressShield({
+      request(app(expressShield({
         errorHandler: (err: any, _req: express.Request, res: express.Response) => {
           expect(err).toBeDefined();
           expect(err).toBeInstanceOf(ShieldError);
@@ -235,7 +235,7 @@ describe('ExpressShield', () => {
     });
 
     it('should emit error and continue processing', (done) => {
-      request(app(ExpressShield({
+      request(app(expressShield({
         errorHandler: (err: any, _req: express.Request, _res: express.Response,
           next: express.NextFunction) => {
           expect(err).toBeDefined();
@@ -254,7 +254,7 @@ describe('ExpressShield', () => {
     });
 
     it('should not emit error', (done) => {
-      request(app(ExpressShield({
+      request(app(expressShield({
         errorHandler: () => {
           done(new Error('not expected to reach here'));
         },

@@ -1,11 +1,13 @@
-const { Shield } = require('node-shield');
+const { shield } = require('node-shield');
 
 const iterations = 1000000;
 const payload = {
   "title": "Node.js in Action",
   "isbn": "1617290572",
   "pageCount": 300,
-  "publishedDate": { "date": "2013-10-15T00:00:00.000-0700" },
+  "publishedDate": {
+    "date": "2013-10-15T00:00:00.000-0700"
+  },
   "thumbnailUrl": "https://s3.amazonaws.com/AKIAJC5RLADLUMVRPFDQ.book-thumb-images/cantelon.jpg",
   "shortDescription": "Node.js in Action",
   "status": "PUBLISH",
@@ -22,7 +24,7 @@ let executions = 0;
 const hrstart = process.hrtime();
 
 for (let i = 0; i < iterations; i++) {
-  Shield.evaluate(payload, {
+  shield.evaluate(payload, {
     mongo: true,
     proto: true,
   }, (err) => {

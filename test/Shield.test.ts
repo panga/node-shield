@@ -1,4 +1,4 @@
-import { Shield } from '../src/index';
+import { shield } from '../src/index';
 import ShieldError from '../src/ShieldError';
 
 function assertMongoInjection(err: ShieldError, expectedPayload: any) {
@@ -23,7 +23,7 @@ describe('Shield', () => {
       const payload = {
         ok: 1,
       };
-      Shield.evaluate(payload, {
+      shield.evaluate(payload, {
         mongo: true,
       }, done);
     });
@@ -32,7 +32,7 @@ describe('Shield', () => {
       const payload = {
         $ne: 1,
       };
-      Shield.evaluate(payload, {
+      shield.evaluate(payload, {
         mongo: true,
       }, (err) => {
         assertMongoInjection(err, {
@@ -43,7 +43,7 @@ describe('Shield', () => {
     });
 
     it('should handle non-object', (done) => {
-      Shield.evaluate(1, {
+      shield.evaluate(1, {
         mongo: true,
       }, done);
     });
@@ -54,7 +54,7 @@ describe('Shield', () => {
       const payload = {
         ok: 1,
       };
-      Shield.evaluateAsync(payload, {
+      shield.evaluateAsync(payload, {
         mongo: true,
       }).then(done);
     });
@@ -63,7 +63,7 @@ describe('Shield', () => {
       const payload = {
         $ne: 1,
       };
-      Shield.evaluateAsync(payload, {
+      shield.evaluateAsync(payload, {
         mongo: true,
       }).catch((err) => {
         assertMongoInjection(err, {
@@ -74,7 +74,7 @@ describe('Shield', () => {
     });
 
     it('should handle non-object', (done) => {
-      Shield.evaluateAsync(1, {
+      shield.evaluateAsync(1, {
         mongo: true,
       }).then(done);
     });
@@ -85,17 +85,17 @@ describe('Shield', () => {
       const payload = {
         $ne: 1,
       };
-      Shield.evaluate(payload, {}, done);
+      shield.evaluate(payload, {}, done);
     });
 
     it('should not block __proto__ object', (done) => {
       const payload = JSON.parse('{ "__proto__": { "admin": true } }');
-      Shield.evaluate(payload, {}, done);
+      shield.evaluate(payload, {}, done);
     });
 
     it('should not block constructor object', (done) => {
       const payload = JSON.parse('{ "constructor": { "admin": true } }');
-      Shield.evaluate(payload, {}, done);
+      shield.evaluate(payload, {}, done);
     });
   });
 
@@ -104,7 +104,7 @@ describe('Shield', () => {
       const payload = {
         $ne: 1,
       };
-      Shield.evaluate(payload, {
+      shield.evaluate(payload, {
         mongo: true,
       }, (err) => {
         assertMongoInjection(err, {
@@ -120,7 +120,7 @@ describe('Shield', () => {
           $ne: 1,
         },
       };
-      Shield.evaluate(payload, {
+      shield.evaluate(payload, {
         mongo: true,
       }, (err) => {
         assertMongoInjection(err, {
@@ -132,14 +132,14 @@ describe('Shield', () => {
 
     it('should not block __proto__ object', (done) => {
       const payload = JSON.parse('{ "__proto__": { "admin": true } }');
-      Shield.evaluate(payload, {
+      shield.evaluate(payload, {
         mongo: true,
       }, done);
     });
 
     it('should not block constructor object', (done) => {
       const payload = JSON.parse('{ "constructor": { "admin": true } }');
-      Shield.evaluate(payload, {
+      shield.evaluate(payload, {
         mongo: true,
       }, done);
     });
@@ -150,14 +150,14 @@ describe('Shield', () => {
       const payload = {
         $ne: 1,
       };
-      Shield.evaluate(payload, {
+      shield.evaluate(payload, {
         proto: true,
       }, done);
     });
 
     it('should block __proto__ object', (done) => {
       const payload = JSON.parse('{ "__proto__": { "admin": true } }');
-      Shield.evaluate(payload, {
+      shield.evaluate(payload, {
         proto: true,
       }, (err) => {
         assertProtoPollution(err, JSON.parse('{ "__proto__": { "admin": true } }'));
@@ -167,7 +167,7 @@ describe('Shield', () => {
 
     it('should block __proto__ in nested object', (done) => {
       const payload = JSON.parse('{ "username": { "__proto__": { "admin": true } } }');
-      Shield.evaluate(payload, {
+      shield.evaluate(payload, {
         proto: true,
       }, (err) => {
         assertProtoPollution(err, JSON.parse('{ "__proto__": { "admin": true } }'));
@@ -177,14 +177,14 @@ describe('Shield', () => {
 
     it('should not block __proto__ string', (done) => {
       const payload = JSON.parse('{ "__proto__": "admin" }');
-      Shield.evaluate(payload, {
+      shield.evaluate(payload, {
         proto: true,
       }, done);
     });
 
     it('should block constructor object', (done) => {
       const payload = JSON.parse('{ "constructor": { "admin": true } }');
-      Shield.evaluate(payload, {
+      shield.evaluate(payload, {
         proto: true,
       }, (err) => {
         assertProtoPollution(err, JSON.parse('{ "constructor": { "admin": true } }'));
@@ -194,7 +194,7 @@ describe('Shield', () => {
 
     it('should block constructor in nested object', (done) => {
       const payload = JSON.parse('{ "username": { "constructor": { "admin": true } } }');
-      Shield.evaluate(payload, {
+      shield.evaluate(payload, {
         proto: true,
       }, (err) => {
         assertProtoPollution(err, JSON.parse('{ "constructor": { "admin": true } }'));
@@ -204,7 +204,7 @@ describe('Shield', () => {
 
     it('should not block constructor string', (done) => {
       const payload = JSON.parse('{ "constructor": "admin" }');
-      Shield.evaluate(payload, {
+      shield.evaluate(payload, {
         proto: true,
       }, done);
     });

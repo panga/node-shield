@@ -30,6 +30,7 @@ A second and more recent attack comes with JavaScript prototype pollution and it
 
 Block object keys which start with `$` operator for MongoDB. e.g: `username: { $gt: ''}`.
 
+https://www.owasp.org/index.php/Testing_for_NoSQL_injection
 https://blog.websecurify.com/2014/08/hacking-nodejs-and-mongodb.html
 https://blog.websecurify.com/2014/08/attacks-nodejs-and-mongodb-part-to.html
 
@@ -44,16 +45,9 @@ https://github.com/HoLyVieR/prototype-pollution-nsec18/blob/master/paper/JavaScr
 ### Callback style
 
 ```
-const { Shield } = require('node-shield');
+const { shield } = require('node-shield');
 
-Shield.evaluate({
-  username: {
-    '$gt': ''
-  }
-}, {
-  mongo: true,
-  proto: true,
-}, (err) => {
+shield.evaluate({ username: { $gt: '' } }, { mongo: true, proto: true }, (err) => {
   if (err) {
     throw err;
   }
@@ -63,18 +57,12 @@ Shield.evaluate({
 ### Promise style
 
 ```
-const { Shield } = require('node-shield');
+const { shield } = require('node-shield');
 
-Shield.evaluateAsync({
-  username: {
-    '$gt': ''
-  }
-}, {
-  mongo: true,
-  proto: true,
-}).catch((err) => {
-  throw err;
-});
+shield.evaluateAsync({ username: { $gt: '' } }, { mongo: true, proto: true })
+  .catch((err) => {
+    throw err;
+  });
 ```
 
 ## Express 4.x middleware usage
@@ -87,15 +75,17 @@ Example, but not limited to:
 
 ```
 const express = require('express');
-const { ExpressShield } = require('node-shield');
+const { expressShield } = require('node-shield');
 
 const app = express();
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
-app.use(ExpressShield({ errorHandler: (shieldError, req, res, next) => {
-  console.error(shieldError);
-  res.sendStatus(400);
-}}));
+app.use(expressShield({
+  errorHandler: (shieldError, req, res, next) => {
+    console.error(shieldError);
+    res.sendStatus(400);
+  },
+}));
 
 app.listen(3000);
 ```
