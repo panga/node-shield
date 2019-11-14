@@ -1,13 +1,16 @@
 # node-shield
 
+[![npm version](https://badge.fury.io/js/node-shield.svg)](https://badge.fury.io/js/node-shield)
+[![Build Status](https://travis-ci.com/panga/node-shield.svg?branch=master)](https://travis-ci.com/panga/node-shield)
+
 Protects against common Node.js vulnerabilities in MEAN stack (MongoDB, Node.js).
 
 Provides an extremelly fast and low overhead API and Express 4.x middleware.
 
 - Executes in ~200ns (nanoseconds) for a payload with 10 keys and 500 bytes.
-- Supports Node 6+ [![Build Status](https://travis-ci.com/panga/node-shield.svg?branch=master)](https://travis-ci.com/panga/node-shield)
 - 100% code coverage.
 - Zero dependencies.
+- Supports Node 6+
 
 ## Install
 
