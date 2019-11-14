@@ -24,4 +24,4 @@ function ExpressShield(options) {
         });
     };
 }
-exports.default = ExpressShield;
+exports.ExpressShield = ExpressShield;

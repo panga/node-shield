@@ -17,7 +17,7 @@ const defaultOptions: ExpressShieldOptions = {
   errorHandler: (_err: any, _req: Request, res: Response) => res.sendStatus(403),
 };
 
-export default function ExpressShield(options ? : ExpressShieldOptions): RequestHandler {
+export function ExpressShield(options ? : ExpressShieldOptions): RequestHandler {
   const opts = {
     ...defaultOptions,
     ...options,

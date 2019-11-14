@@ -1,6 +1,6 @@
 import * as express from 'express';
 import * as request from 'supertest';
-import ExpressShield from '../src/ExpressShield';
+import { ExpressShield } from '../src/index';
 import ShieldError from '../src/ShieldError';
 
 function app(middleware: express.RequestHandler): any {

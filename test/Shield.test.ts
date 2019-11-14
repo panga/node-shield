@@ -1,6 +1,4 @@
-import {
-  Shield,
-} from '../src/Shield';
+import { Shield } from '../src/index';
 import ShieldError from '../src/ShieldError';
 
 function assertMongoInjection(err: ShieldError, expectedPayload: any) {
