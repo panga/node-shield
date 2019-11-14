@@ -29,15 +29,17 @@ A second and more recent attack comes with JavaScript prototype pollution and it
 
 Block object keys which start with `$` operator for MongoDB. e.g: `username: { $gt: ''}`.
 
-https://www.owasp.org/index.php/Testing_for_NoSQL_injection
-https://blog.websecurify.com/2014/08/hacking-nodejs-and-mongodb.html
-https://blog.websecurify.com/2014/08/attacks-nodejs-and-mongodb-part-to.html
+References:
+* https://www.owasp.org/index.php/Testing_for_NoSQL_injection
+* https://blog.websecurify.com/2014/08/hacking-nodejs-and-mongodb.html
+* https://blog.websecurify.com/2014/08/attacks-nodejs-and-mongodb-part-to.html
 
 ### Prototype Pollution protection
 
 Block object keys with names `__proto__` or `constructor` which are also an object.
 
-https://github.com/HoLyVieR/prototype-pollution-nsec18/blob/master/paper/JavaScript_prototype_pollution_attack_in_NodeJS.pdf
+References:
+* https://github.com/HoLyVieR/prototype-pollution-nsec18/blob/master/paper/JavaScript_prototype_pollution_attack_in_NodeJS.pdf
 
 ## API usage
 
@@ -92,7 +94,7 @@ app.listen(3000);
 
 ## License
 
-Apache2.0
+[Apache2.0](https://www.apache.org/licenses/LICENSE-2.0)
 
 ## Author
 
