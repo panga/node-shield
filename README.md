@@ -98,4 +98,6 @@ app.listen(3000);
 
 ## Author
 
-Leonardo Zanivan <panga@apache.org>
+Leonardo Zanivan
+<panga@apache.org>
+[www.panga.dev](https://panga.dev)
