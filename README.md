@@ -44,7 +44,7 @@ https://github.com/HoLyVieR/prototype-pollution-nsec18/blob/master/paper/JavaScr
 
 ### Callback style
 
-```
+```javascript
 const { shield } = require('node-shield');
 
 shield.evaluate({ user: { $gt: '' } }, { mongo: true, proto: true },
@@ -57,7 +57,7 @@ shield.evaluate({ user: { $gt: '' } }, { mongo: true, proto: true },
 
 ### Promise style
 
-```
+```javascript
 const { shield } = require('node-shield');
 
 shield.evaluateAsync({ user: { $gt: '' } }, { mongo: true, proto: true })
@@ -74,7 +74,7 @@ Example, but not limited to:
 - Log the injection attempt and continue to process the request
 - Log the injection attempt and response with an error
 
-```
+```javascript
 const express = require('express');
 const { expressShield } = require('node-shield');
 
