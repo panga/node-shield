@@ -1,6 +1,6 @@
 {
   "name": "node-shield",
-  "version": "0.1.8",
+  "version": "0.1.9",
   "description": "Protects against common Node.js vulnerabilities in MEAN stack (MongoDB, Node.js)",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -34,10 +34,9 @@
     "security",
     "mongodb",
     "express",
-    "mean",
     "middleware",
-    "prototype",
-    "pollution"
+    "pollution",
+    "owasp"
   ],
   "bugs": {
     "url": "https://github.com/panga/node-shield/issues"
