@@ -47,11 +47,12 @@ https://github.com/HoLyVieR/prototype-pollution-nsec18/blob/master/paper/JavaScr
 ```
 const { shield } = require('node-shield');
 
-shield.evaluate({ username: { $gt: '' } }, { mongo: true, proto: true }, (err) => {
-  if (err) {
-    throw err;
-  }
-});
+shield.evaluate({ user: { $gt: '' } }, { mongo: true, proto: true },
+  (err) => {
+    if (err) {
+      throw err;
+    }
+  });
 ```
 
 ### Promise style
@@ -59,7 +60,7 @@ shield.evaluate({ username: { $gt: '' } }, { mongo: true, proto: true }, (err) =
 ```
 const { shield } = require('node-shield');
 
-shield.evaluateAsync({ username: { $gt: '' } }, { mongo: true, proto: true })
+shield.evaluateAsync({ user: { $gt: '' } }, { mongo: true, proto: true })
   .catch((err) => {
     throw err;
   });
