@@ -130,6 +130,17 @@ describe('Shield', () => {
       });
     });
 
+    it('should not block "$" attribute', (done) => {
+      const payload = {
+        $: {
+          id: 1,
+        },
+      };
+      shield.evaluate(payload, {
+        mongo: true,
+      }, done);
+    });
+
     it('should not block __proto__ object', (done) => {
       const payload = JSON.parse('{ "__proto__": { "admin": true } }');
       shield.evaluate(payload, {

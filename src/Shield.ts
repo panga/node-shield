@@ -10,7 +10,7 @@ export class Shield {
   private static traverse(obj: any, opts: ShieldOptions): ShieldError | undefined {
     let error;
     for (const k in obj) {
-      if (opts.mongo && Utils.isString(k) && k.indexOf('$') === 0) {
+      if (opts.mongo && Utils.isString(k) && k.indexOf('$') === 0 && k.length > 1) {
         error = new ShieldError('Mongo $ injection found', 'mongo_error', obj);
         break;
       }
